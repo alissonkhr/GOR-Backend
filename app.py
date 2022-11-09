@@ -30,10 +30,6 @@ CORS(user, origins=["http://localhost:3000"], supports_credentials=True)
 app.register_blueprint(posts, url_prefix="/posts")
 app.register_blueprint(user, url_prefix="/user")
 
-@app.route('/')
-def index():
-    return 'index is working'
-
 if __name__ == '__main__':
     models.initialize()
     app.run(debug=DEBUG, port=PORT)
