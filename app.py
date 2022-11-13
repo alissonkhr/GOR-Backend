@@ -7,7 +7,7 @@ load_dotenv()
 
 from resources.post import posts
 from resources.user import user
-# from resources.games import games
+from resources.games import games
 import models
 from flask_cors import CORS
 
@@ -27,11 +27,11 @@ def load_user(user_id):
 
 CORS(posts, origins=["http://localhost:3000"], supports_credentials=True)
 CORS(user, origins=["http://localhost:3000"], supports_credentials=True)
-# CORS(games, origins=["http://localhost:3000"], supports_credentials=True)
+CORS(games, origins=["http://localhost:3000"], supports_credentials=True)
 
 app.register_blueprint(posts, url_prefix="/posts")
 app.register_blueprint(user, url_prefix="/user")
-# app.register_blueprint(games, url_prefix="/games")
+app.register_blueprint(games, url_prefix="/games")
 
 if __name__ == '__main__':
     models.initialize()

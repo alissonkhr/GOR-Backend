@@ -3,14 +3,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from flask import request # jsonify, Blueprint
-# from playhouse.shortcuts import model_to_dict
+from flask import Blueprint
 
-# games = Blueprint("games", "games")
+games = Blueprint("games", "games")
 
 base_url = "https://api.rawg.io/api/"
 key = os.environ.get("API_KEY")
-
 
 
 def get_current_month():
@@ -78,28 +76,41 @@ game_publishers_page = "publishers"
 game_publishers = f"publishers?key={key}&page_size=50"
 
 
+@games.route("/popular", methods=["GET"])
 def get_popular_games():
     """returns popular games from API"""
-    popular = f"{base_url}{popular_games}"
-    return popular
+    response = requests.get(
+        "https://api.rawg.io/api/games?dates=2021-11-12%2C2022-11-12&key=da5a129d1222463594fe9081ecaac80a&ordering=-rating&page=2&page_size=10"
+    ).json()
+    return response
 
 
+@games.route("/upcoming", methods=["GET"])
 def get_upcoming_games():
     """return upcoming games from the API"""
-    upcoming = f"{base_url}{upcoming_games}"
-    return upcoming
+    response = requests.get(
+        "https://api.rawg.io/api/games?dates=2022-11-12%2C2023-11-12&key=da5a129d1222463594fe9081ecaac80a&ordering=-added&page=2&page_size=10"
+    ).json()
+    return response
 
 
+@games.route("/new", methods=["GET"])
 def get_new_games():
     """returns new games from the API"""
-    new = f"{base_url}{new_games}"
-    return new
+    response = requests.get(
+        "https://api.rawg.io/api/games?dates=2021-11-12%2C2022-11-12&key=da5a129d1222463594fe9081ecaac80a&ordering=-released&page=2&page_size=10"
+    ).json()
+    return response
 
 
-def search_games(game_name):
+@games.route("/<searched>", methods=["GET"])
+def search_games(searched):
     """returns games from API based off users' input"""
-    search = f"{base_url}{query_games}{game_name}&page_size=21"
-    return search
+    searched = searched
+    response = requests.get(
+        "https://api.rawg.io/api/games?key=da5a129d1222463594fe9081ecaac80a&page_size=21&search=" + searched
+    ).json()
+    return response
 
 
 def get_game_details(game_id):
@@ -174,6 +185,6 @@ def get_specific_games_publisher(publisher_id):
 #     "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
 # }
 
-response = requests.request("GET", get_popular_games())
+# response = requests.request("GET", get_popular_games())
 
-print(response.text)
+# print(response.text)
