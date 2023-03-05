@@ -1,14 +1,18 @@
 from peewee import *
-import datetime
+import datetime, os
 from flask_login import UserMixin
 
 # import os
-# from playhouse.db_url import connect
+from playhouse.db_url import connect
 
 # if "ON_HEROKU" in os.environ:
 #     DATABASE = connect(os.environ.get("DATABASE_URL"))
 # else:
-DATABASE = SqliteDatabase("gor.sqlite")
+# DATABASE = SqliteDatabase("gor.sqlite")
+DATABASE = connect(os.environ.get('DATABASE_URL') or 'sqlite:///gor.sqlite')
+# Connect to the database URL defined in the environment, falling
+# back to a local Sqlite database if no database URL is specified.
+
 
 
 class User(UserMixin, Model):
