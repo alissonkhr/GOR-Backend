@@ -35,10 +35,20 @@ def load_user(user_id):
 
 
 CORS(
-    posts, origins=["http://localhost:3000"], supports_credentials=True
+    posts,
+    origins=["http://localhost:3000", "https://gamers-on-record.up.railway.app/"],
+    supports_credentials=True,
 )  # heroku url goes after local for all
-CORS(user, origins=["http://localhost:3000"], supports_credentials=True)
-CORS(games, origins=["http://localhost:3000"], supports_credentials=True)
+CORS(
+    user,
+    origins=["http://localhost:3000", "https://gamers-on-record.up.railway.app/"],
+    supports_credentials=True,
+)
+CORS(
+    games,
+    origins=["http://localhost:3000", "https://gamers-on-record.up.railway.app/"],
+    supports_credentials=True,
+)
 
 app.register_blueprint(posts, url_prefix="/posts")
 app.register_blueprint(user, url_prefix="/user")
