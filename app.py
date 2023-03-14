@@ -73,7 +73,8 @@ def before_request():
 if os.environ.get("FLASK_ENV") != "development":
     print("\non heroku!")
     models.initialize()
-
-if __name__ == "__main__":
-    models.initialize()
     app.run(debug=DEBUG, port=PORT)
+
+# if __name__ == "__main__":
+#     models.initialize()
+#     app.run(debug=DEBUG, port=PORT)
